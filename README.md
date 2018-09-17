@@ -1,1 +1,1 @@
-# Linked-List-Implementation-in-C-
+# Data Structurs and algorithms
