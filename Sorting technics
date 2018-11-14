@@ -1,0 +1,89 @@
+namespace Sorting
+{
+	void InsertionSort(int* arr, int size)
+	{
+		for (int i = 1; i < size; ++i)
+		{
+			int key = arr[i];
+			int j = i - 1;
+			while (j >= 0 && arr[j] > key)
+			{
+				arr[j + 1] = arr[j];
+				--j;
+			}
+			arr[j + 1] = key;
+		}
+	}
+	void SelectionSort(int* arr, int size)
+	{
+		for (int i = 0; i < size - 1; ++i)
+		{
+			int min = i;
+			for (int j = min + 1; j < size; ++j)
+			{
+				if (arr[j] < arr[min])
+				{
+					min = j;
+				}
+			}
+			std::swap(arr[i], arr[min]);
+		}
+	}
+
+	int partition(int* arr, int low, int high)
+	{
+		int pivot = arr[high];
+		int i = low - 1;
+		for (int j = low; j < high; ++j)
+		{
+			if (arr[j] <= pivot)
+			{
+				++i;
+				std::swap(arr[i], arr[j]);
+			}
+		}
+		std::swap(arr[i + 1], arr[high]);
+		return (i + 1);
+	}
+
+	void QuickSort(int* arr, int low, int high)
+	{
+		if (low < high)
+		{
+			int p = partition(arr, low, high);
+			QuickSort(arr, low, p - 1);
+			QuickSort(arr, p + 1, high);
+		}
+	}
+	void Heapyfy(int* arr, int size, int index)
+	{
+		int largest = index;
+		int left = 2 * index;
+		int right = 2 * index + 1;
+		if (left < size && arr[left] > arr[largest])
+			largest = left;
+		if (right < size && arr[right] > arr[largest])
+			largest = right;
+		if (largest != index)
+		{
+			std::swap(arr[index], arr[largest]);
+			Heapyfy(arr, size, largest);
+		}
+	}
+	
+	void BuildMaxHeap(int* arr, int size)
+	{
+		for (int i = size/2 - 1; i >= 0; --i)
+		{
+			Heapyfy(arr, size, i);
+		}
+	}
+	void HeapSort(int* arr, int size)
+	{
+		BuildMaxHeap(arr, size);
+		for (int i = size - 1; i >= 0; --i)
+		{
+			std::swap(arr[0], arr[i]);
+			Heapyfy(arr, i, 0);
+		}
+	}
